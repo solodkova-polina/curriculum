@@ -1,0 +1,163 @@
+enum Role {
+  Admin
+  Employee
+  Manager
+}
+
+enum Mastery {
+  Novice
+  Advanced
+  Competent
+  Expert
+  Master
+}
+
+enum Proficiency {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+  Native
+}
+
+type UserProfile {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  full_name: String!
+  avatar: String
+  skills: [ProfileSkill!]!
+  languages: [ProfileLanguage!]!
+}
+
+type ProfileSkill {
+  id: ID!
+  name: String!
+  categoryId: String!
+  mastery: Mastery!
+}
+
+type ProfileLanguage {
+  id: ID!
+  name: String!
+  proficiency: Proficiency!
+}
+
+type User {
+  id: ID!
+  email: String!
+  role: Role!
+  department_name: String
+  position_name: String
+  created_at: String
+  profile: UserProfile
+  cvs: [Cv!]!
+  position: Position
+  department: Department
+}
+
+type Department {
+  id: ID!
+  name: String!
+  created_at: String
+}
+
+type Position {
+  id: ID!
+  name: String!
+  created_at: String
+}
+
+type SkillCategory {
+  id: ID!
+  name: String!
+  order: Int!
+  parent: SkillCategory
+  children: [SkillCategory!]!
+}
+
+type Skill {
+  id: ID!
+  name: String!
+  category: SkillCategory!
+}
+
+type Language {
+  id: ID!
+  name: String!
+  native_name: String!
+  iso2: String!
+}
+
+type Project {
+  id: ID!
+  name: String!
+  internal_name: String!
+  domain: String!
+  start_date: String!
+  end_date: String
+  description: String!
+}
+
+type CvSkill {
+  id: ID!
+  name: String!
+  categoryId: String!
+  mastery: Mastery
+}
+
+type CvLanguage {
+  id: ID!
+  name: String!
+  proficiency: Proficiency!
+}
+
+type CvProject {
+  id: ID!
+  name: String!
+  internal_name: String!
+  description: String!
+  domain: String!
+  start_date: String!
+  end_date: String
+  project: Project
+}
+
+type Cv {
+  id: ID!
+  name: String!
+  education: String
+  description: String
+  user: User!
+  skills: [CvSkill!]!
+  languages: [CvLanguage!]!
+  projects: [CvProject!]!
+}
+
+type AuthResult {
+  user: User!
+  access_token: String!
+  refresh_token: String!
+}
+
+input AuthInput {
+  email: String!
+  password_hash: String!
+}
+
+type Query {
+  users: [User!]!
+  user(userId: ID!): User
+  skillCategories: [SkillCategory!]!
+  skills: [Skill!]!
+  projects: [Project!]!
+  profile(userId: ID!): UserProfile
+  positions: [Position!]!
+  login(auth: AuthInput!): AuthResult!
+  languages: [Language!]!
+  departments: [Department!]!
+  cv(cvId: ID!): Cv
+  cvs: [Cv!]!
+}

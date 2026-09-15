@@ -1,0 +1,200 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ------------------------------------
+// Модели сущностей
+// ------------------------------------
+
+model User {
+  id              String      @id @default(uuid())
+  email           String      @unique
+  password_hash   String?
+  role            String      @default("Employee") // Admin, Employee, Manager
+  department_name String?
+  position_name   String?
+  created_at      DateTime    @default(now())
+
+  department_id   String?
+  department      Department? @relation(fields: [department_id], references: [id], onDelete: SetNull)
+
+  position_id     String?
+  position        Position?   @relation(fields: [position_id], references: [id], onDelete: SetNull)
+
+  profile         Profile?
+  cvs             Cv[]
+
+  @@map("users")
+}
+
+model Profile {
+  id         String   @id @default(uuid())
+  first_name String
+  last_name  String
+  full_name  String
+  avatar     String?
+
+  user_id    String   @unique
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  skills     ProfileSkill[]
+  languages  ProfileLanguage[]
+
+  @@map("profiles")
+}
+
+model Department {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  created_at DateTime @default(now())
+
+  users      User[]
+
+  @@map("departments")
+}
+
+model Position {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  created_at DateTime @default(now())
+
+  users      User[]
+
+  @@map("positions")
+}
+
+model SkillCategory {
+  id        String          @id @default(uuid())
+  name      String
+  order     Int             @default(0)
+
+  parent_id String?
+  parent    SkillCategory?  @relation("CategoryToCategory", fields: [parent_id], references: [id], onDelete: SetNull)
+  children  SkillCategory[] @relation("CategoryToCategory")
+
+  skills    Skill[]
+
+  @@map("skill_categories")
+}
+
+model Skill {
+  id          String        @id @default(uuid())
+  name        String
+  category_id String
+  category    SkillCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  @@map("skills")
+}
+
+model Language {
+  id          String @id @default(uuid())
+  name        String
+  native_name String
+  iso2        String @unique
+
+  @@map("languages")
+}
+
+model Project {
+  id            String      @id @default(uuid())
+  name          String
+  internal_name String
+  domain        String
+  start_date    String
+  end_date      String?
+  description   String
+
+  cv_projects   CvProject[]
+
+  @@map("projects")
+}
+
+model Cv {
+  id          String   @id @default(uuid())
+  name        String
+  education   String?
+  description String?
+  created_at  DateTime @default(now())
+
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  skills      CvSkill[]
+  languages   CvLanguage[]
+  projects    CvProject[]
+
+  @@map("cvs")
+}
+
+// ------------------------------------
+// Промежуточные таблицы для навыков/языков/проектов
+// ------------------------------------
+
+model ProfileSkill {
+  id         String   @id @default(uuid())
+  name       String
+  categoryId String
+  mastery    String   @default("Novice") // Novice, Advanced, Competent, Expert, Master
+
+  profile_id String
+  profile    Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  @@map("profile_skills")
+}
+
+model ProfileLanguage {
+  id          String   @id @default(uuid())
+  name        String
+  proficiency String   @default("A1") // A1, A2, B1, B2, C1, C2, Native
+
+  profile_id  String
+  profile     Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  @@map("profile_languages")
+}
+
+model CvSkill {
+  id         String   @id @default(uuid())
+  name       String
+  categoryId String
+  mastery    String?
+
+  cv_id      String
+  cv         Cv       @relation(fields: [cv_id], references: [id], onDelete: Cascade)
+
+  @@map("cv_skills")
+}
+
+model CvLanguage {
+  id          String   @id @default(uuid())
+  name        String
+  proficiency String
+
+  cv_id       String
+  cv          Cv       @relation(fields: [cv_id], references: [id], onDelete: Cascade)
+
+  @@map("cv_languages")
+}
+
+model CvProject {
+  id            String   @id @default(uuid())
+  name          String
+  internal_name String
+  description   String
+  domain        String
+  start_date    String
+  end_date      String?
+
+  cv_id         String
+  cv            Cv       @relation(fields: [cv_id], references: [id], onDelete: Cascade)
+
+  project_id    String
+  project       Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("cv_projects")
+}
