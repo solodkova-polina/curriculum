@@ -114,7 +114,7 @@ mutation CreateNewCv($cv: CreateCvInput!) {
   }
 }
 ```
-** !! Вставьте этот JSON в нижнюю панель Variables в Apollo Sandbox!! **
+!! Вставьте этот JSON в нижнюю панель Variables в Apollo Sandbox!!
 ```json
 {
   "cv": {
