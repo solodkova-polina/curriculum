@@ -96,6 +96,33 @@ query GetUsersData {
   }
 }
 
+*Пример тестовой мутации (для песочницы)*
+mutation CreateNewCv($cv: CreateCvInput!) {
+  createCv(cv: $cv) {
+    id
+    name
+    education
+    description
+    user {
+      id
+      email
+      profile {
+        full_name
+      }
+    }
+  }
+}
+
+!! Вставьте этот JSON в нижнюю панель Variables в Apollo Sandbox!!
+{
+  "cv": {
+    "userId": "3b0ed60a-0d69-4511-9c53-c7ea21a7eabf",
+    "name": "Fullstack Developer CV 2026",
+    "education": "БГУИР (Компьютерные системы и сети)",
+    "description": "Опытный специалист по разработке клиент-серверных приложений на React, Node.js и GraphQL."
+  }
+}
+
 ### Проброс публичной ссылки для Клиента 
 1. Оставьте терминал с бэкендом запущенным.
 2. В новом окне терминала запустите Localtunnel:
