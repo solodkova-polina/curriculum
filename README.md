@@ -38,35 +38,35 @@
 
 ### 2. Установка зависимостей
 Клонируйте репозиторий и установите пакеты: <br>
- Выполнить в терминале команду: **npm install**
+ Выполнить в терминале команду: `npm install`
 
 ---
 
 ### 3. Настройка окружения 
-Убедитесь, что в корне проекта создан файл .env: **DATABASE_URL="file:./dev.db"**
+Убедитесь, что в корне проекта создан файл .env: `DATABASE_URL="file:./dev.db"`
 
 ---
 
 ### 4. Инициализация БД и генерация типов
  * Применить схему и создать SQLite файл dev.db <br>
- Выполнить в терминале команду **./node_modules/.bin/prisma db push**
+ Выполнить в терминале команду `./node_modules/.bin/prisma db push`
 
 * Сгенерировать TypeScript-типы из GraphQL-схемы <br>
-Выполнить в терминале команду **npx graphql-codegen**
+Выполнить в терминале команду `npx graphql-codegen`
 
 ---
 
 ### 5. Наполнение БД данными
-Выполнить в терминале команду **./node_modules/.bin/prisma db seed**
+Выполнить в терминале команду `./node_modules/.bin/prisma db seed`
 
 ---
 
 ### 6. Запуск сервера
-Выполнить в терминале команду **npm run start**
+Выполнить в терминале команду `npm run start`
 
 *Доступные сервисы*:
 
-GraphQL API & Sandbox: http://localhost:4000/
+GraphQL API & Sandbox: `http://localhost:4000/`
 
 Prisma Studio (UI для БД): ./node_modules/.bin/prisma studio (http://localhost:5555)
 
@@ -129,6 +129,6 @@ mutation CreateNewCv($cv: CreateCvInput!) {
 ### Проброс публичной ссылки для Клиента 
 1. Оставьте терминал с бэкендом запущенным.
 2. В новом окне терминала запустите Localtunnel:
-*npx localtunnel --port 4000*
+`npx localtunnel --port 4000`
 3. Вы получите публичную ссылку вида: *https://metal-pigs-type.loca.lt*
 4. Укажите эту ссылку на стороне фронтенд-клиента
