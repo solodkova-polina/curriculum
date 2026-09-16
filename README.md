@@ -70,7 +70,7 @@ GraphQL API & Sandbox: `http://localhost:4000/`
 
 Prisma Studio (UI для БД): ./node_modules/.bin/prisma studio (http://localhost:5555)
 
-*Пример тестового запроса (для песочницы)* 
+Пример тестового запроса (для песочницы)
 ```graphql
 query GetUsersData {
   users {
@@ -96,7 +96,7 @@ query GetUsersData {
   }
 }
 ```
-*Пример тестовой мутации (для песочницы)*
+Пример тестовой мутации (для песочницы)
 ```graphql
 mutation CreateNewCv($cv: CreateCvInput!) {
   createCv(cv: $cv) {
@@ -114,8 +114,7 @@ mutation CreateNewCv($cv: CreateCvInput!) {
   }
 }
 ```
-
-!! Вставьте этот JSON в нижнюю панель Variables в Apollo Sandbox!!
+** !! Вставьте этот JSON в нижнюю панель Variables в Apollo Sandbox!! **
 ```json
 {
   "cv": {
