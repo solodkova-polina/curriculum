@@ -39,22 +39,40 @@
 ### 2. Установка зависимостей
 Клонируйте репозиторий и установите пакеты:
 
-```powershell
+powershell
 npm install
 
+---
 
-## Инициалзация базы данныхи генерация типов 
+### 3. Настройка окружения 
+Убедитесь, что в корне проекта создан файл .env: **DATABASE_URL="file:./dev.db"**
 
-# 1. Применить схему и создать SQLite файл dev.db
+---
+
+### 4. Инициализация БД и генерация типов
+ * Применить схему и создать SQLite файл dev.db
 ./node_modules/.bin/prisma db push
 
-# 2. Сгенерировать TypeScript-типы из GraphQL-схемы
+* Сгенерировать TypeScript-типы из GraphQL-схемы
 npx graphql-codegen
 
-## Наполнение БД данными
+---
+
+### 5. Наполнение БД данными
 ./node_modules/.bin/prisma db seed
 
--- пример тестового запроса 
+---
+
+### 6. Запуск сервера
+npm run start
+
+*Доступные сервисы*:
+
+GraphQL API & Sandbox: http://localhost:4000/
+
+Prisma Studio (UI для БД): ./node_modules/.bin/prisma studio (http://localhost:5555)
+
+*Пример тестового запроса (для песочницы)* 
 
 query GetUsersData {
   users {
@@ -79,3 +97,10 @@ query GetUsersData {
     }
   }
 }
+
+#### Проброс публичной ссылки для Клиента 
+1. Оставьте терминал с бэкендом запущенным.
+2. В новом окне терминала запустите Localtunnel:
+*npx localtunnel --port 4000*
+3. Вы получите публичную ссылку вида: *https://metal-pigs-type.loca.lt*
+4. Укажите эту ссылку на стороне фронтенд-клиента
