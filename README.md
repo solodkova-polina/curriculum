@@ -71,7 +71,7 @@ GraphQL API & Sandbox: http://localhost:4000/
 Prisma Studio (UI для БД): ./node_modules/.bin/prisma studio (http://localhost:5555)
 
 *Пример тестового запроса (для песочницы)* 
-
+```graphql
 query GetUsersData {
   users {
     id
@@ -95,8 +95,9 @@ query GetUsersData {
     }
   }
 }
-
+```
 *Пример тестовой мутации (для песочницы)*
+```graphql
 mutation CreateNewCv($cv: CreateCvInput!) {
   createCv(cv: $cv) {
     id
@@ -112,8 +113,10 @@ mutation CreateNewCv($cv: CreateCvInput!) {
     }
   }
 }
+```
 
 !! Вставьте этот JSON в нижнюю панель Variables в Apollo Sandbox!!
+```json
 {
   "cv": {
     "userId": "3b0ed60a-0d69-4511-9c53-c7ea21a7eabf",
@@ -122,7 +125,7 @@ mutation CreateNewCv($cv: CreateCvInput!) {
     "description": "Опытный специалист по разработке клиент-серверных приложений на React, Node.js и GraphQL."
   }
 }
-
+```
 ### Проброс публичной ссылки для Клиента 
 1. Оставьте терминал с бэкендом запущенным.
 2. В новом окне терминала запустите Localtunnel:
