@@ -68,7 +68,7 @@
 
 GraphQL API & Sandbox: `http://localhost:4000/`
 
-Prisma Studio (UI для БД): ./node_modules/.bin/prisma studio (http://localhost:5555)
+Prisma Studio (UI для БД): `./node_modules/.bin/prisma studio (http://localhost:5555)`
 
 ---
 
@@ -120,7 +120,7 @@ mutation CreateNewCv($cv: CreateCvInput!) {
 ```json
 {
   "cv": {
-    "userId": "3b0ed60a-0d69-4511-9c53-c7ea21a7eabf",
+    "userId": "ВСТАВИТЬ РЕАЛЬНЫЙ ID",
     "name": "Fullstack Developer CV 2026",
     "education": "БГУИР (Компьютерные системы и сети)",
     "description": "Опытный специалист по разработке клиент-серверных приложений на React, Node.js и GraphQL."
