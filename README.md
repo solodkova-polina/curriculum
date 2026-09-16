@@ -50,21 +50,21 @@ npm install
 ---
 
 ### 4. Инициализация БД и генерация типов
- * Применить схему и создать SQLite файл dev.db
-./node_modules/.bin/prisma db push
+ * Применить схему и создать SQLite файл dev.db <br>
+ Выполнить в терминале команду **./node_modules/.bin/prisma db push**
 
-* Сгенерировать TypeScript-типы из GraphQL-схемы
-npx graphql-codegen
+* Сгенерировать TypeScript-типы из GraphQL-схемы <br>
+Выполнить в терминале команду **npx graphql-codegen**
 
 ---
 
 ### 5. Наполнение БД данными
-./node_modules/.bin/prisma db seed
+Выполнить в терминале команду **./node_modules/.bin/prisma db seed**
 
 ---
 
 ### 6. Запуск сервера
-npm run start
+Выполнить в терминале команду **npm run start**
 
 *Доступные сервисы*:
 
@@ -98,7 +98,7 @@ query GetUsersData {
   }
 }
 
-#### Проброс публичной ссылки для Клиента 
+### Проброс публичной ссылки для Клиента 
 1. Оставьте терминал с бэкендом запущенным.
 2. В новом окне терминала запустите Localtunnel:
 *npx localtunnel --port 4000*
