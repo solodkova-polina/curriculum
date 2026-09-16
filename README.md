@@ -70,6 +70,8 @@ GraphQL API & Sandbox: `http://localhost:4000/`
 
 Prisma Studio (UI для БД): ./node_modules/.bin/prisma studio (http://localhost:5555)
 
+---
+
 Пример тестового запроса (для песочницы)
 ```graphql
 query GetUsersData {
@@ -125,6 +127,8 @@ mutation CreateNewCv($cv: CreateCvInput!) {
   }
 }
 ```
+---
+
 ### Проброс публичной ссылки для Клиента 
 1. Оставьте терминал с бэкендом запущенным.
 2. В новом окне терминала запустите Localtunnel:
