@@ -161,3 +161,163 @@ type Query {
   cv(cvId: ID!): Cv
   cvs: [Cv!]!
 }
+
+input DeleteProfileLanguageInput {
+  userId: ID!
+  name: String!
+}
+
+input DeleteProfileSkillInput {
+  userId: ID!
+  name: String!
+}
+
+input DeleteSkillInput {
+  skillId: ID!
+}
+
+input ForgotPasswordInput {
+  email: String!
+}
+
+input RemoveCvProjectInput {
+  cvId: ID!
+  projectId: ID!
+}
+
+input UpdateCvProjectInput {
+  cvId: ID!
+  projectId: ID!
+  start_date: String
+  end_date: String
+}
+
+input UpdateCvSkillInput {
+  cvId: ID!
+  name: String!
+  mastery: Mastery!
+}
+
+input UpdateLanguageInput {
+  id: ID!
+  name: String
+  native_name: String
+  iso2: String
+}
+
+input UpdateProfileInput {
+  userId: ID!
+  first_name: String
+  last_name: String
+  avatar: String
+}
+
+input UpdateSkillInput {
+  id: ID!
+  name: String
+  categoryId: ID
+}
+
+input UpdateUserInput {
+  userId: ID!
+  role: Role
+  department_name: String
+  position_name: String
+  department_id: ID
+  position_id: ID
+}
+
+input UploadAvatarInput {
+  userId: ID!
+  base64: String!
+}
+type DeleteResult {
+  affected: Int!
+}
+
+input AddCvProjectInput {
+  cvId: ID!
+  projectId: ID!
+}
+
+input AddCvSkillInput {
+  cvId: ID!
+  name: String!
+  categoryId: String!
+  mastery: Mastery
+}
+
+input AddProfileLanguageInput {
+  userId: ID!
+  name: String!
+  proficiency: Proficiency!
+}
+
+input AddProfileSkillInput {
+  userId: ID!
+  name: String!
+  categoryId: String!
+  mastery: Mastery!
+}
+
+input CreateCvInput {
+  userId: ID!
+  name: String!
+  education: String
+  description: String
+}
+
+input CreateLanguageInput {
+  name: String!
+  native_name: String!
+  iso2: String!
+}
+
+input CreateSkillInput {
+  name: String!
+  categoryId: ID!
+}
+
+input DeleteCvInput {
+  cvId: ID!
+}
+
+input DeleteCvSkillInput {
+  cvId: ID!
+  name: String!
+}
+
+input DeleteLanguageInput {
+  id: ID!
+}
+
+type Mutation {
+  addCvProject(project: AddCvProjectInput!): Cv!
+  addCvSkill(skill: AddCvSkillInput!): Cv!
+  addProfileLanguage(language: AddProfileLanguageInput!): UserProfile!
+  addProfileSkill(skill: AddProfileSkillInput!): UserProfile!
+  createCv(cv: CreateCvInput!): Cv!
+  createLanguage(language: CreateLanguageInput!): Language!
+  createSkill(skill: CreateSkillInput!): Skill!
+  deleteCv(cv: DeleteCvInput!): DeleteResult!
+  deleteCvSkill(skill: DeleteCvSkillInput!): Cv!
+  deleteLanguage(language: DeleteLanguageInput!): Language!
+  signup(auth: AuthInput!): AuthResult!
+  forgotPassword(auth: ForgotPasswordInput!): Boolean!
+  updateProfile(profile: UpdateProfileInput!): UserProfile!
+  uploadAvatar(avatar: UploadAvatarInput!): String!
+  updateUser(user: UpdateUserInput!): User!
+
+  deleteProfileLanguage(language: DeleteProfileLanguageInput!): UserProfile!
+  updateProfileLanguage(language: AddProfileLanguageInput!): UserProfile!
+  deleteProfileSkill(skill: DeleteProfileSkillInput!): UserProfile!
+  updateProfileSkill(skill: AddProfileSkillInput!): UserProfile!
+
+  deleteSkill(skill: DeleteSkillInput!): DeleteResult!
+  updateSkill(skill: UpdateSkillInput!): Skill!
+  updateLanguage(language: UpdateLanguageInput!): Language!
+
+  removeCvProject(project: RemoveCvProjectInput!): Cv!
+  updateCvProject(project: UpdateCvProjectInput!): Cv!
+  updateCvSkill(skill: UpdateCvSkillInput!): Cv!
+}
