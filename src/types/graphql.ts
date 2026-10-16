@@ -180,6 +180,7 @@ export type Mutation = {
   deleteProfileSkill: UserProfile;
   deleteSkill: DeleteResult;
   forgotPassword: Scalars['Boolean']['output'];
+  login: AuthResult;
   removeCvProject: Cv;
   signup: AuthResult;
   updateCvProject: Cv;
@@ -261,6 +262,11 @@ export type MutationDeleteSkillArgs = {
 
 export type MutationForgotPasswordArgs = {
   auth: ForgotPasswordInput;
+};
+
+
+export type MutationLoginArgs = {
+  auth: AuthInput;
 };
 
 
@@ -741,6 +747,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteProfileSkill?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationDeleteProfileSkillArgs, 'skill'>>;
   deleteSkill?: Resolver<ResolversTypes['DeleteResult'], ParentType, ContextType, RequireFields<MutationDeleteSkillArgs, 'skill'>>;
   forgotPassword?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationForgotPasswordArgs, 'auth'>>;
+  login?: Resolver<ResolversTypes['AuthResult'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'auth'>>;
   removeCvProject?: Resolver<ResolversTypes['Cv'], ParentType, ContextType, RequireFields<MutationRemoveCvProjectArgs, 'project'>>;
   signup?: Resolver<ResolversTypes['AuthResult'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'auth'>>;
   updateCvProject?: Resolver<ResolversTypes['Cv'], ParentType, ContextType, RequireFields<MutationUpdateCvProjectArgs, 'project'>>;

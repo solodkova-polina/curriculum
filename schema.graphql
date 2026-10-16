@@ -292,6 +292,7 @@ input DeleteLanguageInput {
 }
 
 type Mutation {
+  login(auth: AuthInput!): AuthResult!
   addCvProject(project: AddCvProjectInput!): Cv!
   addCvSkill(skill: AddCvSkillInput!): Cv!
   addProfileLanguage(language: AddProfileLanguageInput!): UserProfile!

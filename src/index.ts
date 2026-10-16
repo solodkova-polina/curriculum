@@ -87,6 +87,27 @@ const resolvers = {
       };
     },
 
+    login: async (_: any, { auth }: { auth: any }) => {
+      const user = await prisma.user.findUnique({
+        where: { email: auth.email },
+        include: { profile: true, cvs: true, position: true, department: true },
+      });
+
+      if (!user) {
+        throw new Error('Пользователь с таким email не найден');
+      }
+
+      if (auth.password_hash && user.password_hash && user.password_hash !== auth.password_hash) {
+        throw new Error('Неверный пароль');
+      }
+
+      return {
+        user,
+        access_token: `mock_access_token_${user.id}`,
+        refresh_token: `mock_refresh_token_${user.id}`,
+      };
+    },
+
     forgotPassword: async (_: any, { auth }: { auth: { email: string } }) => {
       console.log(`Password reset requested for: ${auth.email}`);
       return true;
