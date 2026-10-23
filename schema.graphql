@@ -291,6 +291,36 @@ input DeleteLanguageInput {
   id: ID!
 }
 
+input CreateUserInput {
+  email: String!
+  password_hash: String!
+  role: Role
+  department_name: String
+  position_name: String
+}
+
+input DeleteAvatarInput {
+  userId: ID!
+}
+
+input DeleteUserInput {
+  userId: ID!
+}
+
+input UpdateCvInput {
+  cvId: ID!
+  name: String
+  education: String
+  description: String
+}
+
+extend type Mutation {
+  createUser(user: CreateUserInput!): User!
+  deleteUser(user: DeleteUserInput!): DeleteResult!
+  deleteAvatar(avatar: DeleteAvatarInput!): UserProfile!
+  updateCv(cv: UpdateCvInput!): Cv!
+}
+
 type Mutation {
   login(auth: AuthInput!): AuthResult!
   addCvProject(project: AddCvProjectInput!): Cv!

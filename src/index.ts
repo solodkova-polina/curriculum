@@ -253,6 +253,18 @@ const resolvers = {
       });
     },
 
+    updateCv: async (_: any, { cv }: { cv: any }) => {
+      return await prisma.cv.update({
+        where: { id: cv.cvId },
+        data: {
+          name: cv.name || undefined,
+          education: cv.education || undefined,
+          description: cv.description || undefined,
+        },
+        include: { user: true, skills: true, languages: true, projects: true },
+      });
+    },
+
     deleteCv: async (_: any, { cv }: { cv: any }) => {
       const res = await prisma.cv.deleteMany({ where: { id: cv.cvId } });
       return { affected: res.count };
@@ -388,6 +400,51 @@ const resolvers = {
       const res = await prisma.skill.deleteMany({ where: { id: skill.skillId } });
       return { affected: res.count };
     },
+
+    // 1. Создание пользователя (CreateUser)
+    createUser: async (_: any, { user }: { user: any }) => {
+      return await prisma.user.create({
+        data: {
+          email: user.email,
+          password_hash: user.password_hash,
+          role: user.role || 'Employee',
+          department_name: user.department_name || undefined,
+          position_name: user.position_name || undefined,
+          profile: {
+            create: {
+              first_name: user.email.split('@')[0],
+              last_name: 'User',
+              full_name: `${user.email.split('@')[0]} User`,
+            },
+          },
+        },
+        include: { profile: true, cvs: true, position: true, department: true },
+      });
+    },
+
+    // 2. Удаление пользователя (DeleteUser)
+    deleteUser: async (_: any, { user }: { user: any }) => {
+      // Prisma автоматически удалит связанные profile, cvs через каскадное удаление
+      const res = await prisma.user.deleteMany({
+        where: { id: user.userId },
+      });
+      return { affected: res.count };
+    },
+
+    // 3. Удаление аватара профиля (DeleteAvatar)
+    deleteAvatar: async (_: any, { avatar }: { avatar: any }) => {
+      const profile = await prisma.profile.findUnique({
+        where: { user_id: avatar.userId },
+      });
+      if (!profile) throw new Error('Profile not found');
+
+      return await prisma.profile.update({
+        where: { id: profile.id },
+        data: { avatar: null },
+        include: { skills: true, languages: true },
+      });
+    },
+
   },
 };
 

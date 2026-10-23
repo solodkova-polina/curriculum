@@ -66,6 +66,14 @@ export type CreateSkillInput = {
   name: Scalars['String']['input'];
 };
 
+export type CreateUserInput = {
+  department_name?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  password_hash: Scalars['String']['input'];
+  position_name?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<Role>;
+};
+
 export type Cv = {
   __typename?: 'Cv';
   description?: Maybe<Scalars['String']['output']>;
@@ -105,6 +113,10 @@ export type CvSkill = {
   name: Scalars['String']['output'];
 };
 
+export type DeleteAvatarInput = {
+  userId: Scalars['ID']['input'];
+};
+
 export type DeleteCvInput = {
   cvId: Scalars['ID']['input'];
 };
@@ -135,6 +147,10 @@ export type DeleteResult = {
 
 export type DeleteSkillInput = {
   skillId: Scalars['ID']['input'];
+};
+
+export type DeleteUserInput = {
+  userId: Scalars['ID']['input'];
 };
 
 export type Department = {
@@ -173,16 +189,20 @@ export type Mutation = {
   createCv: Cv;
   createLanguage: Language;
   createSkill: Skill;
+  createUser: User;
+  deleteAvatar: UserProfile;
   deleteCv: DeleteResult;
   deleteCvSkill: Cv;
   deleteLanguage: Language;
   deleteProfileLanguage: UserProfile;
   deleteProfileSkill: UserProfile;
   deleteSkill: DeleteResult;
+  deleteUser: DeleteResult;
   forgotPassword: Scalars['Boolean']['output'];
   login: AuthResult;
   removeCvProject: Cv;
   signup: AuthResult;
+  updateCv: Cv;
   updateCvProject: Cv;
   updateCvSkill: Cv;
   updateLanguage: Language;
@@ -230,6 +250,16 @@ export type MutationCreateSkillArgs = {
 };
 
 
+export type MutationCreateUserArgs = {
+  user: CreateUserInput;
+};
+
+
+export type MutationDeleteAvatarArgs = {
+  avatar: DeleteAvatarInput;
+};
+
+
 export type MutationDeleteCvArgs = {
   cv: DeleteCvInput;
 };
@@ -260,6 +290,11 @@ export type MutationDeleteSkillArgs = {
 };
 
 
+export type MutationDeleteUserArgs = {
+  user: DeleteUserInput;
+};
+
+
 export type MutationForgotPasswordArgs = {
   auth: ForgotPasswordInput;
 };
@@ -277,6 +312,11 @@ export type MutationRemoveCvProjectArgs = {
 
 export type MutationSignupArgs = {
   auth: AuthInput;
+};
+
+
+export type MutationUpdateCvArgs = {
+  cv: UpdateCvInput;
 };
 
 
@@ -428,6 +468,13 @@ export type SkillCategory = {
   name: Scalars['String']['output'];
   order: Scalars['Int']['output'];
   parent?: Maybe<SkillCategory>;
+};
+
+export type UpdateCvInput = {
+  cvId: Scalars['ID']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  education?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateCvProjectInput = {
@@ -585,10 +632,12 @@ export type ResolversTypes = {
   CreateCvInput: CreateCvInput;
   CreateLanguageInput: CreateLanguageInput;
   CreateSkillInput: CreateSkillInput;
+  CreateUserInput: CreateUserInput;
   Cv: ResolverTypeWrapper<Cv>;
   CvLanguage: ResolverTypeWrapper<CvLanguage>;
   CvProject: ResolverTypeWrapper<CvProject>;
   CvSkill: ResolverTypeWrapper<CvSkill>;
+  DeleteAvatarInput: DeleteAvatarInput;
   DeleteCvInput: DeleteCvInput;
   DeleteCvSkillInput: DeleteCvSkillInput;
   DeleteLanguageInput: DeleteLanguageInput;
@@ -596,6 +645,7 @@ export type ResolversTypes = {
   DeleteProfileSkillInput: DeleteProfileSkillInput;
   DeleteResult: ResolverTypeWrapper<DeleteResult>;
   DeleteSkillInput: DeleteSkillInput;
+  DeleteUserInput: DeleteUserInput;
   Department: ResolverTypeWrapper<Department>;
   ForgotPasswordInput: ForgotPasswordInput;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
@@ -614,6 +664,7 @@ export type ResolversTypes = {
   Skill: ResolverTypeWrapper<Skill>;
   SkillCategory: ResolverTypeWrapper<SkillCategory>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  UpdateCvInput: UpdateCvInput;
   UpdateCvProjectInput: UpdateCvProjectInput;
   UpdateCvSkillInput: UpdateCvSkillInput;
   UpdateLanguageInput: UpdateLanguageInput;
@@ -637,10 +688,12 @@ export type ResolversParentTypes = {
   CreateCvInput: CreateCvInput;
   CreateLanguageInput: CreateLanguageInput;
   CreateSkillInput: CreateSkillInput;
+  CreateUserInput: CreateUserInput;
   Cv: Cv;
   CvLanguage: CvLanguage;
   CvProject: CvProject;
   CvSkill: CvSkill;
+  DeleteAvatarInput: DeleteAvatarInput;
   DeleteCvInput: DeleteCvInput;
   DeleteCvSkillInput: DeleteCvSkillInput;
   DeleteLanguageInput: DeleteLanguageInput;
@@ -648,6 +701,7 @@ export type ResolversParentTypes = {
   DeleteProfileSkillInput: DeleteProfileSkillInput;
   DeleteResult: DeleteResult;
   DeleteSkillInput: DeleteSkillInput;
+  DeleteUserInput: DeleteUserInput;
   Department: Department;
   ForgotPasswordInput: ForgotPasswordInput;
   ID: Scalars['ID']['output'];
@@ -663,6 +717,7 @@ export type ResolversParentTypes = {
   Skill: Skill;
   SkillCategory: SkillCategory;
   String: Scalars['String']['output'];
+  UpdateCvInput: UpdateCvInput;
   UpdateCvProjectInput: UpdateCvProjectInput;
   UpdateCvSkillInput: UpdateCvSkillInput;
   UpdateLanguageInput: UpdateLanguageInput;
@@ -740,16 +795,20 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createCv?: Resolver<ResolversTypes['Cv'], ParentType, ContextType, RequireFields<MutationCreateCvArgs, 'cv'>>;
   createLanguage?: Resolver<ResolversTypes['Language'], ParentType, ContextType, RequireFields<MutationCreateLanguageArgs, 'language'>>;
   createSkill?: Resolver<ResolversTypes['Skill'], ParentType, ContextType, RequireFields<MutationCreateSkillArgs, 'skill'>>;
+  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
+  deleteAvatar?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationDeleteAvatarArgs, 'avatar'>>;
   deleteCv?: Resolver<ResolversTypes['DeleteResult'], ParentType, ContextType, RequireFields<MutationDeleteCvArgs, 'cv'>>;
   deleteCvSkill?: Resolver<ResolversTypes['Cv'], ParentType, ContextType, RequireFields<MutationDeleteCvSkillArgs, 'skill'>>;
   deleteLanguage?: Resolver<ResolversTypes['Language'], ParentType, ContextType, RequireFields<MutationDeleteLanguageArgs, 'language'>>;
   deleteProfileLanguage?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationDeleteProfileLanguageArgs, 'language'>>;
   deleteProfileSkill?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationDeleteProfileSkillArgs, 'skill'>>;
   deleteSkill?: Resolver<ResolversTypes['DeleteResult'], ParentType, ContextType, RequireFields<MutationDeleteSkillArgs, 'skill'>>;
+  deleteUser?: Resolver<ResolversTypes['DeleteResult'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'user'>>;
   forgotPassword?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationForgotPasswordArgs, 'auth'>>;
   login?: Resolver<ResolversTypes['AuthResult'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'auth'>>;
   removeCvProject?: Resolver<ResolversTypes['Cv'], ParentType, ContextType, RequireFields<MutationRemoveCvProjectArgs, 'project'>>;
   signup?: Resolver<ResolversTypes['AuthResult'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'auth'>>;
+  updateCv?: Resolver<ResolversTypes['Cv'], ParentType, ContextType, RequireFields<MutationUpdateCvArgs, 'cv'>>;
   updateCvProject?: Resolver<ResolversTypes['Cv'], ParentType, ContextType, RequireFields<MutationUpdateCvProjectArgs, 'project'>>;
   updateCvSkill?: Resolver<ResolversTypes['Cv'], ParentType, ContextType, RequireFields<MutationUpdateCvSkillArgs, 'skill'>>;
   updateLanguage?: Resolver<ResolversTypes['Language'], ParentType, ContextType, RequireFields<MutationUpdateLanguageArgs, 'language'>>;
